@@ -33,6 +33,7 @@ if ! zenity --question \
     exit 0
 fi
 
+apt autopurge qtbase5-dev -y | garma --progress --pulsate --text="正在删除一些可能导致升级失败的软件开发包...您可在升级结束后重新安装： qtbase5-dev" --no-cancel --auto-close
 
 # 替换主源文件
 sed -i 's/bookworm/trixie/g' /etc/apt/sources.list

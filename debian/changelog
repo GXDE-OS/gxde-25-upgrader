@@ -1,6 +1,6 @@
-gxde-25-upgrader (1.0.1) UNRELEASED; urgency=low
+gxde-25-upgrader (1.0.2) UNRELEASED; urgency=low
 
   * fix dependency
-    <nnnn is the bug number of your ITP>
+  * Remove qt5base-dev before upgrade for it will break the progress
 
  -- shenmo <shenmo@spark-app.store>  Sun, 27 Apr 2025 16:33:21 +0800
