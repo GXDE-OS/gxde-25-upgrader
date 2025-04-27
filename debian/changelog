@@ -1,6 +1,7 @@
-gxde-25-upgrader (1.0.2) UNRELEASED; urgency=low
+gxde-25-upgrader (1.0.3) UNRELEASED; urgency=low
 
   * fix dependency
   * Remove qt5base-dev before upgrade for it will break the progress
+  * 安装后再次安装 gxde-desktop 以防止出错
 
  -- shenmo <shenmo@spark-app.store>  Sun, 27 Apr 2025 16:33:21 +0800
