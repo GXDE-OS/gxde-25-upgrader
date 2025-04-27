@@ -9,7 +9,7 @@ fi
 # 风险确认对话框
 if ! zenity --question \
           --title="系统升级确认" \
-          --text="您即将执行Debian 12到13的升级\n\n\
+          --text="您即将执行GXDE OS 15到25的升级\n\n\
 • 该操作不可逆且存在风险\n\
 • 请确保系统已经更新到最新\n\
 • 请确保已做好数据备份\n\
@@ -20,6 +20,18 @@ if ! zenity --question \
     exit 0
 fi
 
+if ! zenity --question \
+          --title="再次升级确认" \
+          --text="您即将执行GXDE OS 15到25的升级\n\n\
+• 该操作不可逆且存在风险！！！\n\
+• 请确保系统已经更新到最新！！！\n\
+• 请确保已做好数据备份！！！\n\
+• 您确定要继续吗？" \
+          --ok-label="我已再次确认，继续升级" \
+          --cancel-label="我还有事没做完，取消"; then
+    garma --info --text="升级操作已取消" --timeout=3
+    exit 0
+fi
 
 
 # 替换主源文件
