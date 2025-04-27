@@ -1,0 +1,95 @@
+#!/bin/bash
+
+# 检查root权限
+if [ "$(id -u)" -ne 0 ]; then
+    pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY $0
+    exit
+fi
+
+# 风险确认对话框
+if ! zenity --question \
+          --title="系统升级确认" \
+          --text="您即将执行Debian 12到13的升级\n\n\
+• 该操作不可逆且存在风险\n\
+• 请确保系统已经更新到最新\n\
+• 请确保已做好数据备份\n\
+• 您确定要继续吗？" \
+          --ok-label="继续升级" \
+          --cancel-label="我还有事没做完，取消"; then
+    garma --info --text="升级操作已取消" --timeout=3
+    exit 0
+fi
+
+
+
+# 替换主源文件
+sed -i 's/bookworm/trixie/g' /etc/apt/sources.list
+
+# 处理PPA源
+declare -A ppa_map=(
+    ["/etc/apt/sources.list.d/gxde.list"]='s/bixie/lizhi/g'
+    ["/etc/apt/sources.list.d/gxde-testing.list"]='s/tianlu/zhuangzhuang/g'
+)
+
+for file in "${!ppa_map[@]}"; do
+    if [[ -f "$file" ]]; then
+        sed -i "${ppa_map[$file]}" "$file"
+    else
+        [[ "$file" =~ testing ]] && continue  # 测试源不存在时跳过
+        garma --error --text="关键文件缺失：$file"
+        exit 1
+    fi
+done
+	rm -fv /usr/bin/gxde-app-upgrader
+	cat > /usr/bin/gxde-app-upgrader   << EOF
+#!/bin/bash
+garma --warning --text="检测到您尚未完成系统大版本更新，请使用 GXDE 25 更新器 完成更新后再检查更新！"
+EOF
+	chmod +x  /usr/bin/gxde-app-upgrader
+
+apt update | garma --progress --pulsate --text="正在刷新系统包缓存，请保持网络通畅..." --no-cancel --auto-close
+aptss update | garma --progress --pulsate --text="正在刷新系统包缓存，请保持网络通畅..." --no-cancel --auto-close
+
+if zenity --question \
+        --title="选择升级策略" \
+        --text="请根据您的需求选择升级方式：\n\n\
+• 普通用户：使用默认配置进行升级\n\
+• 专业用户：使用命令行升级，手动决定是否保留服务配置文件" \
+        --ok-label="普通用户" \
+        --cancel-label="专业用户"; then
+    
+    # 普通用户分支
+    warning_text="即将启动升级程序！\n\n\
+• 升级过程可能需要1-3小时,期间请勿进行其他操作\n\
+• 升级过程中请勿关闭弹出的终端窗口，否则可能导致升级出错\n\
+• 请保持网络畅通"
+    
+garma --info --text="$warning_text"
+
+    # 启动图形升级器
+
+	gxde-terminal -e bash -c 'env DEBIAN_FRONTEND=noninteractive aptss full-upgrade -yqq && env DEBIAN_FRONTEND=noninteractive aptss install gxde-app-upgrader --reinstall -yqq && echo "-----------------------" && echo "升级完成，请按回车重启您的计算机" && read && reboot'
+
+else
+    # 专业用户分支
+    help_text="请按以下步骤手动升级：\n\n\
+1. 更新软件包列表：\n   sudo apt update\n\n\
+2. 执行完全升级：\n   sudo apt full-upgrade -y\n\n\
+3. (可选)清理旧软件包：\n   sudo apt autoremove --purge\n\n\
+4. 重启系统：\n   sudo reboot"
+    
+    zenity --info --title="专业模式说明" \
+         --text="$help_text" \
+         --extra-button="复制命令到剪贴板" \
+         --width=600
+
+    # 处理复制按钮点击
+    if [ $? = 1 ]; then
+        echo -e "sudo aptss update\nsudo aptss full-upgrade -y\nsudo aptss autopurge" | 
+        xclip -selection clipboard
+        garma --info --text="升级命令已复制到剪贴板" --timeout=2
+    fi
+fi
+
+# 可选执行自动更新（专业用户需自行取消注释）
+# apt update && apt full-upgrade -y

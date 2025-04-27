@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=GXDE 25 Upgrader
+Name[zh_CN]=GXDE 25 升级器
+Exec=gxde-25-upgrader
+Terminal=false
+Type=Application
+Icon=gxde-25-upgrader
+StartupWMClass=gxde-25-upgrader
+Categories=Utils;
+Comment=gxde-25-upgrader
