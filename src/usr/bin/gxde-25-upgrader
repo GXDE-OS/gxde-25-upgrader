@@ -82,7 +82,7 @@ garma --info --text="$warning_text"
 
     # 启动图形升级器
 
-	gxde-terminal -e bash -c 'env DEBIAN_FRONTEND=noninteractive aptss full-upgrade -yqq && env DEBIAN_FRONTEND=noninteractive aptss install gxde-app-upgrader --reinstall -yqq && env DEBIAN_FRONTEND=noninteractive aptss install gxde-desktop deepin-kwin-x11 --reinstall -yqq && echo "-----------------------" && echo "升级完成，请按回车重启您的计算机" && read && reboot'
+	gxde-terminal -e bash -c 'env DEBIAN_FRONTEND=noninteractive aptss full-upgrade -yqq && env DEBIAN_FRONTEND=noninteractive aptss install gxde-app-upgrader --reinstall -yqq && env DEBIAN_FRONTEND=noninteractive aptss install gxde-desktop deepin-kwin-x11 libdtkcore-dev --reinstall -yqq && echo "-----------------------" && echo "升级完成，请按回车重启您的计算机" && read && reboot'
 
 else
     # 专业用户分支
