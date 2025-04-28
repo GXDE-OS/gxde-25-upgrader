@@ -1,9 +1,10 @@
+
 #!/bin/bash
 # 检查root权限
 if [ "$(id -u)" -ne 0 ]; then
     exit
 fi
-env DEBIAN_FRONTEND=noninteractive aptss full-upgrade -yqq && env DEBIAN_FRONTEND=noninteractive aptss install gxde-app-upgrader --reinstall -yqq && env DEBIAN_FRONTEND=noninteractive aptss install gxde-desktop deepin-kwin-x11 libdtkcore-dev gxde-kglobalacceld --reinstall -yqq || echo "!!!!!!!升级失败，请反馈给QQ群 881201853"
+yes n | env DEBIAN_FRONTEND=noninteractive aptss full-upgrade -yqq && yes n | env DEBIAN_FRONTEND=noninteractive aptss install gxde-app-upgrader --reinstall -yqq && yes n | env DEBIAN_FRONTEND=noninteractive aptss install gxde-desktop deepin-kwin-x11 libdtkcore-dev gxde-kglobalacceld --reinstall -yqq || echo "!!!!!!!升级失败，请反馈给QQ群 881201853"
 
 echo "-----------------------"
 echo "升级完成，请按回车重启您的计算机" 

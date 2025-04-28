@@ -1,4 +1,4 @@
-gxde-25-upgrader (1.0.7) UNRELEASED; urgency=low
+gxde-25-upgrader (1.0.8) UNRELEASED; urgency=low
 
   * fix dependency
   * Remove qt5base-dev before upgrade for it will break the progress
@@ -7,5 +7,6 @@ gxde-25-upgrader (1.0.7) UNRELEASED; urgency=low
   * 先 aptss install -fy
   * 修复 重新安装 libdtkcore-dev 以避免 Dtkdata 错误
   * 修复 安装 gxde-kglobalacceld 以避免无法正常启动窗口管理快捷键
+  * yes n | 
 
  -- shenmo <shenmo@spark-app.store>  Sun, 27 Apr 2025 16:33:21 +0800
