@@ -33,6 +33,10 @@ if ! zenity --question \
     exit 0
 fi
 
+apt update | garma --progress --pulsate --text="正在刷新系统包缓存，请保持网络通畅..." --no-cancel --auto-close
+aptss update | garma --progress --pulsate --text="正在刷新系统包缓存，请保持网络通畅..." --no-cancel --auto-close
+env DEBIAN_FRONTEND=noninteractive aptss install -f -yqq | garma --progress --pulsate --text="正在检查和修复系统依赖问题..." --no-cancel --auto-close
+
 apt autopurge qtbase5-dev -y | garma --progress --pulsate --text="正在删除一些可能导致升级失败的软件开发包...您可在升级结束后重新安装： qtbase5-dev" --no-cancel --auto-close
 
 # 替换主源文件

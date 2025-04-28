@@ -1,9 +1,10 @@
-gxde-25-upgrader (1.0.6) UNRELEASED; urgency=low
+gxde-25-upgrader (1.0.7) UNRELEASED; urgency=low
 
   * fix dependency
   * Remove qt5base-dev before upgrade for it will break the progress
   * 安装后再次安装 gxde-desktop 以防止出错
   * 删除 bpo 仓库 避免出错
+  * 先 aptss install -fy
   * 修复 重新安装 libdtkcore-dev 以避免 Dtkdata 错误
   * 修复 安装 gxde-kglobalacceld 以避免无法正常启动窗口管理快捷键
 
