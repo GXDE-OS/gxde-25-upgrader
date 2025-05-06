@@ -1,11 +1,37 @@
-
 #!/bin/bash
 # 检查root权限
 if [ "$(id -u)" -ne 0 ]; then
     exit
 fi
-yes n | env DEBIAN_FRONTEND=noninteractive aptss full-upgrade -o DPkg::options::="--force-confdef" -o DPkg::options::="--force-confold" -yqq --assume-yes 
+
+# 检查软件包安装状态
+ANDROID_INSTALLED=0
+DESKTOP_MISSING=0
+dpkg -s gxde-desktop-android &>/dev/null && ANDROID_INSTALLED=1
+dpkg -s gxde-desktop &>/dev/null || DESKTOP_MISSING=1
+
+# 确定要安装的桌面包
+DESKTOP_PKG="gxde-desktop"
+if [ "$ANDROID_INSTALLED" -eq 1 ] && [ "$DESKTOP_MISSING" -eq 1 ]; then
+    DESKTOP_PKG="gxde-desktop-android"
+fi
+
+# 执行系统升级
+yes n | env DEBIAN_FRONTEND=noninteractive aptss full-upgrade \
+    -o DPkg::options::="--force-confdef" \
+    -o DPkg::options::="--force-confold" \
+    -yqq --assume-yes 
+
+# 处理grub配置问题
 mv -v /var/lib/dpkg/info/grub-pc.postinst /var/lib/dpkg/info/grub-pc.postinst.bak
 dpkg --configure -a
 mv -v /var/lib/dpkg/info/grub-pc.postinst.bak /var/lib/dpkg/info/grub-pc.postinst
-yes n | env DEBIAN_FRONTEND=noninteractive aptss install gxde-app-upgrader --reinstall -yqq && yes n | env DEBIAN_FRONTEND=noninteractive aptss install gxde-desktop deepin-kwin-x11 libdtkcore-dev gxde-kglobalacceld deepin-desktop-base --reinstall -yqq && echo "-----------------------" && echo "升级完成，请按回车重启您的计算机" && read && reboot || echo "!!!!!!!升级失败，请反馈给QQ群 881201853" 
+
+# 安装/更新软件包
+yes n | env DEBIAN_FRONTEND=noninteractive aptss install gxde-app-upgrader --reinstall -yqq && \
+yes n | env DEBIAN_FRONTEND=noninteractive aptss install $DESKTOP_PKG deepin-kwin-x11 libdtkcore-dev deepin-desktop-base --reinstall -yqq && \
+echo "-----------------------" && \
+echo "升级完成，请按回车重启您的计算机" && \
+read && \
+reboot || \
+echo "!!!!!!!升级失败，请反馈给QQ群 881201853"
