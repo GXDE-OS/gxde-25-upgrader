@@ -29,7 +29,7 @@ mv -v /var/lib/dpkg/info/grub-pc.postinst.bak /var/lib/dpkg/info/grub-pc.postins
 
 # 安装/更新软件包
 yes n | env DEBIAN_FRONTEND=noninteractive aptss install gxde-app-upgrader --reinstall -yqq && \
-yes n | env DEBIAN_FRONTEND=noninteractive aptss install $DESKTOP_PKG deepin-kwin-x11 libdtkcore-dev deepin-desktop-base --reinstall -yqq && \
+yes n | env DEBIAN_FRONTEND=noninteractive aptss install $DESKTOP_PKG deepin-kwin-x11 libdtkcore-dev deepin-desktop-base spark-store --reinstall -yqq && \
 echo "-----------------------" && \
 echo "升级完成，请按回车重启您的计算机" && \
 read && \
