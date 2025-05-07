@@ -67,47 +67,16 @@ EOF
 
 apt update | garma --progress --pulsate --text="正在刷新系统包缓存，请保持网络通畅..." --no-cancel --auto-close
 aptss update | garma --progress --pulsate --text="正在刷新系统包缓存，请保持网络通畅..." --no-cancel --auto-close
+yes n | env DEBIAN_FRONTEND=noninteractive aptss install gxde-25-upgrader -yqq 
 
-if zenity --question \
-        --title="选择升级策略" \
-        --text="请根据您的需求选择升级方式：\n\n\
-• 普通用户：使用默认配置进行升级\n\
-• 专业用户：使用命令行升级，手动决定是否保留服务配置文件" \
-        --ok-label="普通用户" \
-        --cancel-label="专业用户"; then
-    
-    # 普通用户分支
     warning_text="即将启动升级程序！\n\n\
 • 升级过程可能需要1-3小时,期间请勿进行其他操作\n\
 • 升级过程中请勿关闭弹出的终端窗口，否则可能导致升级出错\n\
 • 请保持网络畅通"
     
-garma --info --text="$warning_text"
+garma --warning --text="$warning_text" --timeout=10
 
     # 启动图形升级器
 
 	gxde-terminal -e bash -c 'gxde-post-upgrade-fix'
 
-else
-    # 专业用户分支
-    help_text="请按以下步骤手动升级：\n\n\
-1. 更新软件包列表：\n   sudo apt update\n\n\
-2. 执行完全升级：\n   sudo apt full-upgrade -y\n\n\
-3. (可选)清理旧软件包：\n   sudo apt autoremove --purge\n\n\
-4. 重启系统：\n   sudo reboot"
-    
-    zenity --info --title="专业模式说明" \
-         --text="$help_text" \
-         --extra-button="复制命令到剪贴板" \
-         --width=600
-
-    # 处理复制按钮点击
-    if [ $? = 1 ]; then
-        echo -e "sudo aptss update\nsudo aptss full-upgrade -y\nsudo aptss autopurge" | 
-        xclip -selection clipboard
-        garma --info --text="升级命令已复制到剪贴板" --timeout=2
-    fi
-fi
-
-# 可选执行自动更新（专业用户需自行取消注释）
-# apt update && apt full-upgrade -y

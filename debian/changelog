@@ -1,4 +1,4 @@
-gxde-25-upgrader (1.1.0) UNRELEASED; urgency=low
+gxde-25-upgrader (1.1.1) UNRELEASED; urgency=low
 
   * fix dependency
   * Remove qt5base-dev before upgrade for it will break the progress
@@ -9,5 +9,6 @@ gxde-25-upgrader (1.1.0) UNRELEASED; urgency=low
   * 修复 安装 gxde-kglobalacceld 以避免无法正常启动窗口管理快捷键
   * yes n | confold
   * 支持小小电脑
+  * 修复部分情况下无法启动升级的问题，关闭专业模式选项
 
  -- shenmo <shenmo@spark-app.store>  Sun, 27 Apr 2025 16:33:21 +0800

@@ -12,5 +12,5 @@ Rules-Requires-Root: no
 Package: gxde-25-upgrader
 Architecture: all
 Multi-Arch: foreign
-Depends: ${misc:Depends},zenity,garma,spark-store | spark-store-console | aptss, sudo, bash, gxde-terminal,xclip
+Depends: ${misc:Depends},zenity,garma,spark-store | spark-store-console | aptss, sudo, bash, gxde-terminal
 Description: GXDE OS 15 to 25 Upgrader
