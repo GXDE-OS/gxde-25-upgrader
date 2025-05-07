@@ -1,4 +1,4 @@
-gxde-25-upgrader (1.1.3-1) UNRELEASED; urgency=low
+gxde-25-upgrader (1.1.4) UNRELEASED; urgency=low
 
   * fix dependency
   * Remove qt5base-dev before upgrade for it will break the progress
@@ -11,6 +11,7 @@ gxde-25-upgrader (1.1.3-1) UNRELEASED; urgency=low
   * 支持小小电脑
   * 安装后创建桌面快捷方式
   * 在最后安装 星火商店
+  * DFM daemon 默认启动来修复挂载问题
   * 修复部分情况下无法启动升级的问题，关闭专业模式选项
 
  -- shenmo <shenmo@spark-app.store>  Sun, 27 Apr 2025 16:33:21 +0800
