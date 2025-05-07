@@ -20,6 +20,7 @@ fi
 yes n | env DEBIAN_FRONTEND=noninteractive aptss full-upgrade \
     -o DPkg::options::="--force-confdef" \
     -o DPkg::options::="--force-confold" \
+    -o DPkg::options::="--force-overwrite" \
     -yqq --assume-yes 
 
 # 处理grub配置问题
