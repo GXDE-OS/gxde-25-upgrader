@@ -1,0 +1,8 @@
+#!/bin/bash
+userName=$(/usr/bin/logname)
+path="/usr/share/applications/gxde-25-upgrader.desktop"
+# 创建桌面快捷方式
+if [ -n "$userName" ] ; then
+        /usr/bin/cp -f ${path} /home/${userName}/Desktop/gxde-25-upgrader.desktop
+        /usr/bin/chown $userName /home/${userName}/Desktop/gxde-25-upgrader.desktop
+fi
