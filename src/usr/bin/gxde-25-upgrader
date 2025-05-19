@@ -1,5 +1,5 @@
 #!/bin/bash
-
+xhost + 
 # 检查root权限
 if [ "$(id -u)" -ne 0 ]; then
     pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY $0

@@ -1,4 +1,4 @@
-gxde-25-upgrader (1.1.5) UNRELEASED; urgency=low
+gxde-25-upgrader (1.1.6) UNRELEASED; urgency=low
 
   * fix dependency
   * Remove qt5base-dev before upgrade for it will break the progress
